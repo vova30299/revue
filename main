@@ -12,10 +12,11 @@ many.append(4)
 animals.append(shrimp)
 animals.append(fish)
 select = 0
-while (select != 1):
+while (select != 3):
   print("МЕНЮ:")
   print("1 - запустить игру")
   print("2 - добавить животное")
+  print("3 - выход")
   select = int(input())
   if (select == 1):
     print("Введите количество поколений")
