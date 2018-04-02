@@ -3,6 +3,12 @@ rock = 1 #скала
 shrimp = 2 #креветка
 fish = 3 #рыба
 animals = []
+loneliness = []
+loneliness.append(2)
+loneliness.append(2)
+many = []
+many.append(4)
+many.append(4)
 animals.append(shrimp)
 animals.append(fish)
 select = 0
@@ -56,12 +62,13 @@ while (select != 1):
              if (ocean[i + 1][j + 1] == ocean[i][j]):
                 neighbors += 1
              if (animals.count(ocean[i][j]) != 0):
-                if (neighbors >= 4):
+                if (neighbors >= many[animals.index(ocean[i][j])]):
                    new_ocean[i][j] = nothing
-                if (neighbors < 2):
+                if (neighbors < loneliness[animals.index(ocean[i][j])]):
                    new_ocean[i][j] = nothing
-                if ((neighbors == 2) or (neighbors == 3)):
-                   new_ocean[i][j] = ocean[i][j]
+                if (neighbors < many[animals.index(ocean[i][j])]):
+                   if (neighbors >= loneliness[animals.index(ocean[i][j])]):
+                      new_ocean[i][j] = ocean[i][j]
              if (ocean[i][j] == rock):
                 new_ocean[i][j] = ocean[i][j]
              if (ocean[i][j] == nothing): 
@@ -97,5 +104,10 @@ while (select != 1):
     new_animal = len(animals) + 1
     print("Вы добавили животное под номером:")
     print(new_animal)
+    print("Введите минимально допустимое число соседей этого же вида:")
+    few = int(input())
+    loneliness.append(few)
+    print("Введите максимально допустимое число соседей этого же вида:")
+    most = int(input())
+    many.append(most)
     animals.append(new_animal)
-
