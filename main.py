@@ -93,7 +93,18 @@ while (select != 3):
        length += 2
        width += 2
     if (third_select == 2):
-       ocean = save_ocean
+       ocean = []
+       new_ocean = []
+       ocean.append([0] * (width + 2))
+       new_ocean.append([0] * (width + 2))
+       for i in range(0, length):
+         ocean.append([0] + save_ocean[i] + [0])
+         subevents = [0] * (length + 2)
+         new_ocean.append(subevents)
+       ocean.append([0] * (width + 2))
+       new_ocean.append([0] * (width + 2))   
+       length += 2
+       width += 2
     if (third_select == 3):
        ocean.append([0] * (width + 2))
        new_ocean.append([0] * (width + 2))
