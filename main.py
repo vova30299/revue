@@ -161,6 +161,10 @@ while (select != 3):
     second_select = int(input())
     if (second_select == 1):
       save_ocean = sub_ocean
+    if (second_select == 2):
+      ocean = []
+      new_ocean = []
+      sub_ocean = []
   if (select == 2):
     new_animal = len(animals) + 1
     print("Вы добавили животное под номером:")
