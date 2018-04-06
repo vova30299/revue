@@ -60,6 +60,36 @@ def generation(animal, N, S, W, E, NW, NE, SW, SE):
    if (SE == animal):
       count += 1
    return(count)
+def random(width, length, maximal):
+  import random
+  new_list = []
+  new_list.append([0] * (width + 2))
+  for i in range(0, length):
+    events = [0]
+    for j in range(0, width):
+      events = events + [random.randint(0, maximal)]
+      events = events + [0]
+    new_list.append(events)
+  new_list.append([0] * (width + 2))   
+  return new_list 
+def read(width, length):
+  new_list = []
+  new_list.append([0] * (width + 2))
+  for i in range(0, length):
+    events = [0]
+    events = events + map(int, input().split(' '))
+    events = events + [0]
+    new_list.append(events)
+  new_list.append([0] * (width + 2))   
+  return new_list  
+def whitespace(width, length):
+  list = []
+  list.append([0] * (width + 2))
+  for i in range(0, length):
+    subevents = [0] * (length + 2)
+    list.append(subevents)
+  list.append([0] * (width + 2))
+  return list
 while (select != 3):
   print("МЕНЮ:")
   print("1 - запустить игру")
@@ -78,20 +108,9 @@ while (select != 3):
     print("3 - ввести собственное положение океана")
     third_select = int(input())
     if (third_select == 1):
-       ocean.append([0] * (width + 2))
-       new_ocean.append([0] * (width + 2))
-       for i in range(0, length):
-         events = [0]
-         for j in range(0, width):
-           events = events + [random.choice(whole)]
-         events = events + [0]
-         subevents = [0] * (length + 2)
-         new_ocean.append(subevents)
-         ocean.append(events)
-       ocean.append([0] * (width + 2)) 
-       new_ocean.append([0] * (width + 2)) 
-       length += 2
-       width += 2
+       maximal = len(whole)
+       ocean = random(width, length, maximal)
+       new_ocean = whitespace(width, length)
     if (third_select == 2):
        ocean = []
        new_ocean = []
@@ -102,24 +121,13 @@ while (select != 3):
          subevents = [0] * (length + 2)
          new_ocean.append(subevents)
        ocean.append([0] * (width + 2))
-       new_ocean.append([0] * (width + 2))   
-       length += 2
-       width += 2
-    if (third_select == 3):
-       ocean.append([0] * (width + 2))
        new_ocean.append([0] * (width + 2))
+    if (third_select == 3):
        print("Введите начальное состояние океана")
-       for i in range(0, length):
-         events = [0]
-         events = events + map(int, input().split(' '))
-         events = events + [0]
-         subevents = [0] * (length + 2)
-         new_ocean.append(subevents)
-         ocean.append(events) 
-       ocean.append([0] * (width + 2)) 
-       new_ocean.append([0] * (width + 2)) 
-       length += 2
-       width += 2   
+       ocean = read(width, length)
+       new_ocean = whitespace(width, length)
+    length += 2
+    width += 2   
     count_animals = len(animals)
     for q in range (0, number_of_generations):
       for i in range(1, length - 1):
