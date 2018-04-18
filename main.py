@@ -1,29 +1,34 @@
 import random 
+
 nothing = 0 #ничего
 rock = 1 #скала
 shrimp = 2 #креветка
 fish = 3 #рыба
-animals = []
+
+animals = [] #инициализация массивов
 loneliness = []
-loneliness.append(2)
-loneliness.append(2)
 many = []
 ocean = []
 save_ocean = []
 new_ocean = []
 sub_ocean = []
+whole = []
+
+loneliness.append(2) #первичное заполнение массивов
+loneliness.append(2)
 many.append(4)
 many.append(4)
 animals.append(shrimp)
 animals.append(fish)
-whole = []
 whole.append(nothing)
 whole.append(rock)
 whole.append(shrimp)
 whole.append(fish)
+
 select = 0
-def neighborhood(this, N, S, W, E, NW, NE, SW, SE):
-   neighbors = 0
+
+def neighborhood(this, N, S, W, E, NW, NE, SW, SE): #функция, подсчитывающая число соседей
+   neighbors = 0                                      #этого же вида
    if (N == this):
       neighbors += 1
    if (S == this):
@@ -40,9 +45,10 @@ def neighborhood(this, N, S, W, E, NW, NE, SW, SE):
       neighbors += 1
    if (SE == this):
       neighbors += 1
-   return(neighbors)  
-def generation(animal, N, S, W, E, NW, NE, SW, SE):
-   count = 0
+   return(neighbors)
+   
+def generation(animal, N, S, W, E, NW, NE, SW, SE): #функция, проверяющая, должно ли 
+   count = 0                               #появиться существо в пустой клетке
    if (N == animal):
       count += 1
    if (S == animal):
@@ -60,7 +66,8 @@ def generation(animal, N, S, W, E, NW, NE, SW, SE):
    if (SE == animal):
       count += 1
    return(count)
-def random(width, length, maximal):
+   
+def random(width, length, maximal): #функция рандомного первичного состояния океана
   import random
   new_list = []
   new_list.append([0] * (width + 2))
@@ -72,7 +79,8 @@ def random(width, length, maximal):
     new_list.append(events)
   new_list.append([0] * (width + 2))   
   return new_list 
-def read(width, length):
+  
+def read(width, length): #функция чтения пользовательского начального состояния океана
   new_list = []
   new_list.append([0] * (width + 2))
   for i in range(0, length):
@@ -82,14 +90,16 @@ def read(width, length):
     new_list.append(events)
   new_list.append([0] * (width + 2))   
   return new_list  
-def whitespace(width, length):
-  list = []
+  
+def whitespace(width, length): #функция, генерирующая "чистый" океан для заполнения 
+  list = []                       #следующей итерации
   list.append([0] * (width + 2))
   for i in range(0, length):
     subevents = [0] * (length + 2)
     list.append(subevents)
   list.append([0] * (width + 2))
   return list
+  
 while (select != 3):
   print("МЕНЮ:")
   print("1 - запустить игру")
@@ -132,10 +142,12 @@ while (select != 3):
     for q in range (0, number_of_generations):
       for i in range(1, length - 1):
         for j in range(1, width - 1):
-             neighbors =  neighborhood(ocean[i][j], ocean[i - 1][j - 1],
-             ocean[i - 1][j], ocean[i - 1][j + 1], ocean[i][j - 1],
-             ocean[i][j + 1], ocean[i + 1][j - 1], ocean[i + 1][j],
-             ocean[i + 1][j + 1])
+             neighbors =  neighborhood(
+                                      ocean[i][j], ocean[i - 1][j - 1],
+                                      ocean[i - 1][j], ocean[i - 1][j + 1], 
+                                      ocean[i][j - 1], ocean[i][j + 1], 
+                                      ocean[i + 1][j - 1], ocean[i + 1][j],
+                                      ocean[i + 1][j + 1])
              if (animals.count(ocean[i][j]) > 0):
                 if (neighbors >= many[animals.index(ocean[i][j])]):
                    new_ocean[i][j] = nothing
@@ -149,10 +161,12 @@ while (select != 3):
              if (ocean[i][j] == nothing): 
                 neighbors_animals = [0] * count_animals
                 for k in range(0, count_animals):
-                   neighbors_animals[k] = generation(animals[k], ocean[i - 1][j - 1],
-             ocean[i - 1][j], ocean[i - 1][j + 1], ocean[i][j - 1],
-             ocean[i][j + 1], ocean[i + 1][j - 1], ocean[i + 1][j],
-             ocean[i + 1][j + 1])
+                   neighbors_animals[k] = generation(
+                                                    animals[k], ocean[i - 1][j - 1],
+                                                    ocean[i - 1][j], ocean[i - 1][j + 1],
+                                                    ocean[i][j - 1], ocean[i][j + 1], 
+                                                    ocean[i + 1][j - 1], ocean[i + 1][j],
+                                                    ocean[i + 1][j + 1])
                 if (neighbors_animals.count(3) > 0):
                   new_ocean[i][j] = animals[neighbors_animals.index(3)]
     ocean = new_ocean
