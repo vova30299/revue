@@ -5,25 +5,13 @@ rock = 1 #скала
 shrimp = 2 #креветка
 fish = 3 #рыба
 
-animals = [] #инициализация массивов
-loneliness = []
-many = []
+animals = [shrimp, fish] #инициализация массивов
+loneliness = [2, 2]
+many = [4, 4]
 ocean = []
 save_ocean = []
 new_ocean = []
-sub_ocean = []
-whole = []
-
-loneliness.append(2) #первичное заполнение массивов
-loneliness.append(2)
-many.append(4)
-many.append(4)
-animals.append(shrimp)
-animals.append(fish)
-whole.append(nothing)
-whole.append(rock)
-whole.append(shrimp)
-whole.append(fish)
+whole = [shrimp, fish, nothing, rock, shrimp, fish]
 
 select = 0
 
@@ -170,7 +158,6 @@ while (select != 3):
                 if (neighbors_animals.count(3) > 0):
                   new_ocean[i][j] = animals[neighbors_animals.index(3)]
     ocean = new_ocean
-    sub_ocean = new_ocean
     ocean.pop(length - 1)
     ocean.pop(0)
     for c in range(0, length - 2):
@@ -182,11 +169,17 @@ while (select != 3):
     print("2 - продолжить игру")
     second_select = int(input())
     if (second_select == 1):
-      save_ocean = sub_ocean
+      save_ocean = []
+      save_ocean.append([0] * (width + 2))
+      for i in range(0, length - 2):
+        events = [0]
+        events = events + ocean[i]
+        events = events + [0]
+      save_ocean.append(events)
+      save_ocean.append([0] * (width + 2))   
     if (second_select == 2):
       ocean = []
       new_ocean = []
-      sub_ocean = []
   if (select == 2):
     new_animal = len(animals) + 1
     print("Вы добавили животное под номером:")
