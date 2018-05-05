@@ -17,8 +17,6 @@ new_ocean = []
 whole = [shrimp, fish, nothing, rock, shrimp, fish]
 select = 0
 
-parser = argparse.ArgumentParser(description = 'Process some integers.')
-parser.add_argument('-m', '--model', type = str)
 
 while (select != 3):
     print("МЕНЮ:")
