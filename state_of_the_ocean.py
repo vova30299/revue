@@ -1,3 +1,10 @@
+import argparse
+
+
+parser = argparse.ArgumentParser(description = 'Process some integers.')
+parser.add_argument('-m', '--model', type = str)
+
+
 def random(width, length, maximal):  # функция рандомного первичного состояния океана
     import random
     new_list = []
