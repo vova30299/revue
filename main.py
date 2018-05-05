@@ -1,27 +1,25 @@
 import random
 import argparse
 
-parser = argparse.ArgumentParser()
+nothing = 0  # ничего
+rock = 1  # скала
+shrimp = 2  # креветка
+fish = 3  # рыба
 
-parser.add_argument('-n', action = 'store', dest = ' ')
-
-nothing = 0
-rock = 1
-shrimp = 2
-fish = 3
-
-animals = [shrimp, fish]
+animals = [shrimp, fish]  # инициализация массивов
 loneliness = [2, 2]
 many = [4, 4]
 ocean = []
 save_ocean = []
 new_ocean = []
 whole = [shrimp, fish, nothing, rock, shrimp, fish]
-
 select = 0
 
-def neighborhood(this, N, S, W, E, NW, NE, SW, SE):
-    neighbors = 0
+parser = argparse.ArgumentParser(description = 'Process some integers.')
+parser.add_argument('-m', '--model', type = str)
+
+def neighborhood(this, N, S, W, E, NW, NE, SW, SE):  # функция, подсчитывающая число соседей
+    neighbors = 0  # этого же вида
     if (N == this):
         neighbors += 1
     if (S == this):
@@ -41,8 +39,8 @@ def neighborhood(this, N, S, W, E, NW, NE, SW, SE):
     return (neighbors)
 
 
-def generation(animal, N, S, W, E, NW, NE, SW, SE):
-    count = 0
+def generation(animal, N, S, W, E, NW, NE, SW, SE):  # функция, проверяющая, должно ли
+    count = 0  # появиться существо в пустой клетке
     if (N == animal):
         count += 1
     if (S == animal):
@@ -62,7 +60,7 @@ def generation(animal, N, S, W, E, NW, NE, SW, SE):
     return (count)
 
 
-def random(width, length, maximal):
+def random(width, length, maximal):  # функция рандомного первичного состояния океана
     import random
     new_list = []
     new_list.append([0] * (width + 2))
@@ -76,20 +74,22 @@ def random(width, length, maximal):
     return new_list
 
 
-def read(width, length):
+def read(width, length):  # функция чтения пользовательского начального состояния океана
     new_list = []
     new_list.append([0] * (width + 2))
     for i in range(0, length):
         events = [0]
-        events = events + map(int, int(parser.parse_args(input().split())))
+        options = parser.parse_args()
+        infile = options.model
+        events = events + infile
         events = events + [0]
         new_list.append(events)
     new_list.append([0] * (width + 2))
     return new_list
 
 
-def whitespace(width, length):
-    list = []
+def whitespace(width, length):  # функция, генерирующая "чистый" океан для заполнения
+    list = []  # следующей итерации
     list.append([0] * (width + 2))
     for i in range(0, length):
         subevents = [0] * (length + 2)
@@ -99,22 +99,32 @@ def whitespace(width, length):
 
 
 while (select != 3):
-    print parser.parse_args(['-n', 'MENU:'])
-    print parser.parse_args(['-n', '1 - GAME'])
-    print parser.parse_args(['-n', '2 - add animal'])
-    print parser.parse_args(['-n', '3 - exit'])
-    select = int(parser.parse_args(input().split()))
+    print("МЕНЮ:")
+    print("1 - запустить игру")
+    print("2 - добавить животное")
+    print("3 - выход")
+    options = parser.parse_args()
+    select = options.model
+    select = int(select)
     if (select == 1):
-        print parser.parse_args(['-n', 'enter the number of generations'])
-        number_of_generations = int(input())
-        print parser.parse_args(['-n', 'enter the length of the ocean'])
-        length = int(parser.parse_args(input().split()))
-        print parser.parse_args(['-n', 'enter the width of the ocean'])
-        width = int(parser.parse_args(input().split()))
-        print parser.parse_args(['-n', '1 - generate an arbitrary position of the ocean'])
-        print parser.parse_args(['-n', '2 - load the saved position of the ocean'])
-        print parser.parse_args(['-n', '3 - introduce the situation of the ocean'])
-        third_select = int(input())
+        print("Введите количество поколений")
+        options = parser.parse_args()
+        number_of_generations = options.model
+        number_of_generations = int(number_of_generations\)
+        print("Введите длину океана")
+        options = parser.parse_args()
+        length = options.model
+        length = int(length)
+        print("Введите длину океана")
+        options = parser.parse_args()
+        width = options.model
+        width = int(width)
+        print("1 - сгенерировать произвольное положение океана")
+        print("2 - загрузить сохраненное положение океана")
+        print("3 - ввести собственное положение океана")
+        options = parser.parse_args()
+        third_select = options.model
+        third_select = int(third_select)
         if (third_select == 1):
             maximal = len(whole)
             ocean = random(width, length, maximal)
@@ -131,7 +141,7 @@ while (select != 3):
             ocean.append([0] * (width + 2))
             new_ocean.append([0] * (width + 2))
         if (third_select == 3):
-            print parser.parse_args(['-n', 'Enter the initial state of the ocean'])
+            print("Введите начальное состояние океана")
             ocean = read(width, length)
             new_ocean = whitespace(width, length)
         length += 2
@@ -174,11 +184,12 @@ while (select != 3):
             ocean[c].pop(0)
             ocean[c].pop(width - 2)
         for row in ocean:
-            k = ' '.join([str(elem) for elem in row])
-            print parser.parse_args('-n', 'k')
-        print parser.parse_args(['-n', '1 - save the current state of the ocean'])
-        print parser.parse_args(['-n', '2 - to continue the game'])
-        second_select = int(input())
+            print(' '.join([str(elem) for elem in row]))
+        print("1 - сохранить текущее состояние океана")
+        print("2 - продолжить игру")
+        options = parser.parse_args()
+        second_select = options.model
+        second_select = int(second_select)
         if (second_select == 1):
             save_ocean = []
             save_ocean.append([0] * (width + 2))
@@ -193,13 +204,18 @@ while (select != 3):
             new_ocean = []
     if (select == 2):
         new_animal = len(animals) + 1
-        print parser.parse_args(['-n', 'You have added an animal under the number:'])
-        print parser.parse_args(['-n', new_animal])
-        print parser.parse_args(['-n', 'Enter the minimum number of neighbors of the same type:'])
-        few = int(input())
+        print("Вы добавили животное под номером:")
+        print(new_animal)
+        print("Введите минимально допустимое число соседей этого же вида:")
+        print("Введите длину океана")
+        options = parser.parse_args()
+        few = options.model
+        few = int(few)
         loneliness.append(few)
-        print parser.parse_args(['-n', 'Enter the maximum number of neighbors of the same type:'])
-        most = int(input())
+        print("Введите максимально допустимое число соседей этого же вида:")
+        options = parser.parse_args()
+        most = options.model
+        most = int(most)
         whole.append(new_animal)
         many.append(most)
         animals.append(new_animal)
