@@ -110,7 +110,7 @@ while (select != 3):
         print("Введите количество поколений")
         options = parser.parse_args()
         number_of_generations = options.model
-        number_of_generations = int(number_of_generations\)
+        number_of_generations = int(number_of_generations)
         print("Введите длину океана")
         options = parser.parse_args()
         length = options.model
